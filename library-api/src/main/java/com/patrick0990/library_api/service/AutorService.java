@@ -7,6 +7,10 @@ import com.patrick0990.library_api.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
+import java.util.List;
+
+import java.util.Optional;
 
 @Service
 public class AutorService {
@@ -21,6 +25,14 @@ public class AutorService {
 
         return repository.save(autor);
 
+    }
+
+    public List<Autor> listar(){
+        return repository.findAll();
+    }
+
+    public Optional<Autor> obterPorId(UUID id){
+        return repository.findById(id);
     }
 
 }

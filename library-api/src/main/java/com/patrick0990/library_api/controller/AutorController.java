@@ -11,7 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.swing.text.html.Option;
 import java.net.URI;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/autores")
@@ -36,5 +40,16 @@ public class AutorController {
 
     }
 
+    @GetMapping
+    public ResponseEntity<List<Autor>> listar(){
+        List<Autor> autores = service.listar();
+        return ResponseEntity.ok(autores);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> obterPorId(@PathVariable UUID id){
+
+        Optional<Autor> autorOptional = service.obterPorId(id);
+        return autorOptional.<ResponseEntity<Object>>map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(404).body("Autor Não Encontrado"));
+    }
 }
